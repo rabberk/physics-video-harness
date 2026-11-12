@@ -1,0 +1,153 @@
+diff --git a/B-Spline-IPC/src/EntryPoint.cpp b/B-Spline-IPC/src/EntryPoint.cpp
+index 85b2c63..efdbadc 100644
+--- a/B-Spline-IPC/src/EntryPoint.cpp
++++ b/B-Spline-IPC/src/EntryPoint.cpp
+@@ -1,6 +1,8 @@
+ #include "bspch.h"
+ 
+ #include <iostream>
++#include <filesystem>
++#include <oneapi/tbb/global_control.h>
+ 
+ #include "Utility/Profiler.h"
+ #include "Utility/Utility.h"
+@@ -11,6 +13,30 @@
+ #include "Solver/Solver.h"
+ #include "Solver/BSSurfaceMgr.h"
+ 
++// Preview adapter: sample the actual solved B-spline surface. This only writes
++// geometry; it does not change the integrator, control points or contacts.
++static void ExportPreviewSurface(BSIPC::Solver& solver)
++{
++    const unsigned int outputStride = std::getenv("PHYAI_EXPORT_STRIDE") ? std::atoi(std::getenv("PHYAI_EXPORT_STRIDE")) : 5;
++    if (!std::getenv("PHYAI_EXPORT_PREVIEW") || solver.CurStep() % outputStride != 0) return;
++    std::filesystem::create_directories("preview_meshes");
++    auto surface = solver.GetTarget(0);
++    const unsigned int subdivisions = 4;
++    const unsigned int nx = surface->UDomainMax() * subdivisions + 1;
++    const unsigned int ny = surface->VDomainMax() * subdivisions + 1;
++    std::ofstream file("preview_meshes/frame_" + std::to_string(solver.CurStep()/outputStride) + ".obj");
++    file.precision(15);
++    for (unsigned int y=0; y<ny; ++y) for (unsigned int x=0; x<nx; ++x) {
++        auto p = surface->EvalAt(double(x)/subdivisions, double(y)/subdivisions);
++        file << "v " << p.x() << " " << p.y() << " " << p.z() << "\n";
++    }
++    for (unsigned int y=0; y+1<ny; ++y) for (unsigned int x=0; x+1<nx; ++x) {
++        unsigned int a=y*nx+x+1, b=a+1, c=a+nx, d=c+1;
++        file << "f " << a << " " << b << " " << d << "\n";
++        file << "f " << a << " " << d << " " << c << "\n";
++    }
++}
++
+ //#define BSIPC_YAML2OBJ
+ //#undef BSIPC_YAML2OBJ
+ 
+@@ -24,6 +50,8 @@ namespace fs = std::filesystem;
+ 
+ int main()
+ {
++    tbb::global_control previewThreads(tbb::global_control::max_allowed_parallelism,
++        std::getenv("PHYAI_CPU_THREADS") ? std::atoi(std::getenv("PHYAI_CPU_THREADS")) : 16);
+     try
+     {
+         BSIPC::Log::Init();
+@@ -138,6 +166,7 @@ int main()
+         solver.BindRenderer(&renderer);
+ #endif
+         solver.InitSimulation();
++        ExportPreviewSurface(solver);
+ 
+ #if not defined BSIPC_DISABLE_RENDERER
+         renderer.InitRenderer();
+@@ -162,6 +191,7 @@ int main()
+             {
+                 BSIPC::Profiler::Update("siml");
+                 BSIPC::Bool stop = solver.StepForward();
++                ExportPreviewSurface(solver);
+                 BSIPC::Profiler::Check("siml");
+ 
+ #if not defined BSIPC_DISABLE_RENDERER
+diff --git a/B-Spline-IPC/src/Solver/Solver.cpp b/B-Spline-IPC/src/Solver/Solver.cpp
+index 5a0309d..eeb027b 100644
+--- a/B-Spline-IPC/src/Solver/Solver.cpp
++++ b/B-Spline-IPC/src/Solver/Solver.cpp
+@@ -1324,7 +1324,7 @@ namespace BSIPC
+                             }
+                         }
+                     }
+-                    else if (this->includeAnimatedMeshInSystem)                     // only add non-BS DoFs when animated mesh should be included in the system
++                    else if (this->includeAnimatedMeshInSystem && row < bsTrigVertEndIndex + this->animatedMeshCache.value().vertCnt)                     // only add non-BS DoFs when animated mesh should be included in the system
+                     {
+                         rowDofIndices[0] = (row - bsTrigVertEndIndex) + bsDofEndIndex;
+                         rowDofCoeffs[0] = 1.;
+@@ -1351,7 +1351,7 @@ namespace BSIPC
+                             }
+                         }
+                     }
+-                    else if (this->includeAnimatedMeshInSystem)                     // only add non-BS DoFs when animated mesh should be included in the system
++                    else if (this->includeAnimatedMeshInSystem && col < bsTrigVertEndIndex + this->animatedMeshCache.value().vertCnt)                     // only add non-BS DoFs when animated mesh should be included in the system
+                     {
+                         colDofIndices[0] = (col - bsTrigVertEndIndex) + bsDofEndIndex;
+                         colDofCoeffs[0] = 1.;
+@@ -1675,7 +1675,7 @@ namespace BSIPC
+ 
+                 const Vec3& pos = contactMeshVertices[blockColIdx];
+                 for (UInt i = 0; i != 3; ++i)
+-                    bucketVecIdx[i] = std::max(static_cast<Int>(std::floor((pos[i] - posLowerBound[i]) / gridSize[i])), 0);
++                    bucketVecIdx[i] = std::clamp(static_cast<Int>(std::floor((pos[i] - posLowerBound[i]) / gridSize[i])), 0, static_cast<Int>(gridCnt) - 1);
+ 
+                 UInt blockFlattenedIdx = bucketVecIdx[0] + gridCnt * bucketVecIdx[1] + gridCnt * gridCnt * bucketVecIdx[2];
+                 //BSIPC_ASSERT(blockFlattenedIdx < 64 && blockFlattenedIdx >= 0, "invalid flattened bucket idx");
+@@ -1729,7 +1729,7 @@ namespace BSIPC
+                                     }
+                                 }
+                             }
+-                            else if (this->includeAnimatedMeshInSystem)                     // only add non-BS DoFs when animated mesh should be included in the system
++                            else if (this->includeAnimatedMeshInSystem && row < bsTrigVertEndIndex + this->animatedMeshCache.value().vertCnt)                     // only add non-BS DoFs when animated mesh should be included in the system
+                             {
+                                 rowDofIndices[0] = (row - bsTrigVertEndIndex) + bsDofEndIndex;
+                                 rowDofCoeffs[0] = 1.;
+@@ -1756,7 +1756,7 @@ namespace BSIPC
+                                     }
+                                 }
+                             }
+-                            else if (this->includeAnimatedMeshInSystem)                     // only add non-BS DoFs when animated mesh should be included in the system
++                            else if (this->includeAnimatedMeshInSystem && col < bsTrigVertEndIndex + this->animatedMeshCache.value().vertCnt)                     // only add non-BS DoFs when animated mesh should be included in the system
+                             {
+                                 colDofIndices[0] = (col - bsTrigVertEndIndex) + bsDofEndIndex;
+                                 colDofCoeffs[0] = 1.;
+@@ -1813,6 +1813,7 @@ namespace BSIPC
+                 [&](Int i)
+                 {
+                     auto& [key, accBlock, cache] = dofBlockSourceVec[i];
++                    accBlock.setZero(); // Eigen fixed-size matrices are uninitialized by default.
+                     for (const BSHessBlockSource& source : cache.second)
+                         accBlock += source.coeff * (*source.sourceBlock);
+                 }
+@@ -2120,7 +2121,7 @@ namespace BSIPC
+ 
+                 const Vec3& pos = contactMeshVertices[blockColIdx];
+                 for (UInt i = 0; i != 3; ++i)
+-                    bucketVecIdx[i] = std::max(static_cast<Int>(std::floor((pos[i] - posLowerBound[i]) / gridSize[i])), 0);
++                    bucketVecIdx[i] = std::clamp(static_cast<Int>(std::floor((pos[i] - posLowerBound[i]) / gridSize[i])), 0, static_cast<Int>(gridCnt) - 1);
+ 
+                 UInt blockFlattenedIdx = bucketVecIdx[0] + gridCnt * bucketVecIdx[1] + gridCnt * gridCnt * bucketVecIdx[2];
+                 //BSIPC_ASSERT(blockFlattenedIdx < 64 && blockFlattenedIdx >= 0, "invalid flattened bucket idx");
+@@ -2174,7 +2175,7 @@ namespace BSIPC
+                                     }
+                                 }
+                             }
+-                            else if (this->includeAnimatedMeshInSystem)                     // only add non-BS DoFs when animated mesh should be included in the system
++                            else if (this->includeAnimatedMeshInSystem && row < bsTrigVertEndIndex + this->animatedMeshCache.value().vertCnt)                     // only add non-BS DoFs when animated mesh should be included in the system
+                             {
+                                 rowDofIndices[0] = (row - bsTrigVertEndIndex) + bsDofEndIndex;
+                                 rowDofCoeffs[0] = 1.;
+@@ -2201,7 +2202,7 @@ namespace BSIPC
+                                     }
+                                 }
+                             }
+-                            else if (this->includeAnimatedMeshInSystem)                     // only add non-BS DoFs when animated mesh should be included in the system
++                            else if (this->includeAnimatedMeshInSystem && col < bsTrigVertEndIndex + this->animatedMeshCache.value().vertCnt)                     // only add non-BS DoFs when animated mesh should be included in the system
+                             {
+                                 colDofIndices[0] = (col - bsTrigVertEndIndex) + bsDofEndIndex;
+                                 colDofCoeffs[0] = 1.;

@@ -1,0 +1,11 @@
+{
+  "full_decode": true,
+  "frames": 124,
+  "fps": 24,
+  "size": [
+    768,
+    512
+  ],
+  "original_timestamps_preserved": true,
+  "physical_fidelity": "Requires visual review; decode and timestamps are not a physics score."
+}

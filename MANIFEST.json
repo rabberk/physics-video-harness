@@ -1,0 +1,198 @@
+{
+  "README.md": {
+    "bytes": 4209,
+    "sha256": "c7e626f54a7e0f2954b03f5503145a9df0356527cc240486af5829906d63fb1e"
+  },
+  "THIRD_PARTY.md": {
+    "bytes": 1195,
+    "sha256": "354aee34bd3027a07a6f2d17f49b6ab774da0857f2b58362eeec41b7d7789c67"
+  },
+  ".gitignore": {
+    "bytes": 55,
+    "sha256": "e8c35ff3aefaaafc23e41d5b84a87e4b86a81c4a172494896cbe4d176a08e075"
+  },
+  "physics_harness/render_quality_preview.py": {
+    "bytes": 5068,
+    "sha256": "d793b7a470e2f807d19290bf89a93a467c3812ff13cabe8d8106c42015d34576"
+  },
+  "physics_harness/reconstruct_sand.py": {
+    "bytes": 1587,
+    "sha256": "29588b39fe14379b31b016f42d9993818480bd58f5740710432ef29c24bd4672"
+  },
+  "physics_harness/simulate_liquid_surface.py": {
+    "bytes": 6579,
+    "sha256": "b9cfc62ea2a6c9d738a7789add88a26752326171ff8b534f6c51ab85b0022889"
+  },
+  "physics_harness/export_bscloth_preview.py": {
+    "bytes": 5947,
+    "sha256": "1fd3b291bab01050800b4b2290f51987a0c3194bbd408e9e05df23679dd213d0"
+  },
+  "physics_harness/compare.py": {
+    "bytes": 1792,
+    "sha256": "c227f376147f411a5a1ea4ffc03dda8a0e533fdb8c30d8ba53bce3dc645c68cd"
+  },
+  "physics_harness/simulate_newton_sand.py": {
+    "bytes": 3058,
+    "sha256": "64b2c4863af009134a84184be1fa4259c9bb9525b008d716453e96ba5768baa8"
+  },
+  "physics_harness/render_newton_dense.py": {
+    "bytes": 872,
+    "sha256": "fc4da70ebbce3330ae837f0a7b983e008512fe64bd433e24d773e82d6cf0d7b6"
+  },
+  "physics_harness/infer_h3.py": {
+    "bytes": 7495,
+    "sha256": "3fe86219ba2943cd1d479ac5cab65958cfc273a4eecdaccd7d3a6ee9c8b6bb7d"
+  },
+  "physics_harness/vendor/newton_twoway.py": {
+    "bytes": 13495,
+    "sha256": "b7ef94c70f600ba5ef266dc63a9dd5f9dd0c51aac6a64119e172398f89c1f2b5"
+  },
+  "physics_harness/vendor/UnitBox.obj": {
+    "bytes": 784,
+    "sha256": "51bcd6ca642a677a5f132fc90a1e2df2886c20c7da1daeaa9b65bf1bd91230dd"
+  },
+  "physics_harness/chain/bscloth_adapter.patch": {
+    "bytes": 8937,
+    "sha256": "198320d0183192d85ff457ec2fe648c824c3ed6fffd6fdc58765522b7dbd1e51"
+  },
+  "physics_harness/chain/check_tray_settle.py": {
+    "bytes": 9481,
+    "sha256": "51d5cb8b764595e8477dc35e0de930e38fdea97f9fbbf770b3e9c0a27fbf8477"
+  },
+  "physics_harness/chain/run_specialist.py": {
+    "bytes": 2506,
+    "sha256": "889f5378990a8dac332edc3d1b3f48e1bf0c82a82ce47f9e1f9c5841ea893c14"
+  },
+  "physics_harness/chain/solve_dfsph.py": {
+    "bytes": 5079,
+    "sha256": "3ba88ddc9ba90e5be51356ce4ccbf5addc775608d38949f3808eede985951335"
+  },
+  "physics_harness/chain/export_chain_cloth.py": {
+    "bytes": 2273,
+    "sha256": "0de84b885e28e6b81598a60341346b31bc5f1bbb5c62ac61126d133101432bf6"
+  },
+  "physics_harness/chain/bake_interactions.py": {
+    "bytes": 5097,
+    "sha256": "f4149732e562e9cbedd2fadb5f911e2f8f9c1dd4f17e732596deee44a13b179a"
+  },
+  "physics_harness/chain/render_tray_complete.py": {
+    "bytes": 6468,
+    "sha256": "527aa95cf80d01eb2bcde2d1ba1dc1102b1d9b0f5f193eb783262be8782aa2af"
+  },
+  "physics_harness/chain/audit_specialist.py": {
+    "bytes": 2121,
+    "sha256": "060e180a5245d3424f4d3515399fbc0def0242954e8646fe605c08fa8f62e764"
+  },
+  "physics_harness/chain/solve_tray_no_overlap.py": {
+    "bytes": 9051,
+    "sha256": "457891985e3b03ce30f4ee4f9bfec95383fdbd02dc2250a51994023c4a5f02c7"
+  },
+  "physics_harness/chain/reconstruct_mpm.py": {
+    "bytes": 1559,
+    "sha256": "e11232a6ad70106d0073f089e214b5f21bcaafe10e62273aa2e2d519d9a4604f"
+  },
+  "physics_harness/chain/solve_newton.py": {
+    "bytes": 7252,
+    "sha256": "57fce1cfdba884c808d03b11effcb975f66700913782c8d03f2a1b7b03bb3dd3"
+  },
+  "physics_harness/chain/prepare_bscloth.py": {
+    "bytes": 2663,
+    "sha256": "cd6d1ef17b5e10cb926ca42bd528a87a86fe71e94eb06733b13f71aebf102ce6"
+  },
+  "results/combined/complete.mp4": {
+    "bytes": 351380,
+    "sha256": "6af366c5a3ec33bffb4c733067abf168703828fc24dcaa8729b5c101493cb2e5"
+  },
+  "results/combined/complete_preview.jpg": {
+    "bytes": 33962,
+    "sha256": "05c06e26e710e56197dad86dd863a74408a9efe3c183631fc9aca8cadf8b44bc"
+  },
+  "results/combined/retention.json": {
+    "bytes": 9684,
+    "sha256": "b4915704a87d8710ff1210250b07d94565454c4eae2bd60a9d4b089f8ec855eb"
+  },
+  "results/cloth/validation.json": {
+    "bytes": 227,
+    "sha256": "ba038d96c2d081d0ec1b277f11e71c028bd6d7164227bc19ab3fd2af7af258aa"
+  },
+  "results/cloth/contact_sheet.jpg": {
+    "bytes": 435058,
+    "sha256": "37e2ece4a3ae2cbab8c7a3b5ee4ae2704c1388ba453e3fd4e0cbfd41c65a95a2"
+  },
+  "results/cloth/caption.md": {
+    "bytes": 1695,
+    "sha256": "72bdbeb61c63eed76741ddffceb543e361201b6f89edae39705bbb8465f512f7"
+  },
+  "results/cloth/comparison.mp4": {
+    "bytes": 606783,
+    "sha256": "9c2009d5993433654a5edcdb0a1f12289cb8a756b3822519151446ef7041b766"
+  },
+  "results/cloth/draft.mp4": {
+    "bytes": 256858,
+    "sha256": "bff438db7835692c0e24b596a063bdb3adae065b941363a1af4c295bf82efccd"
+  },
+  "results/cloth/final_seed0.mp4": {
+    "bytes": 185167,
+    "sha256": "b48eeee62b0b420e3d9a0e25348e7fa3493e5d0775113632be83441d4c3148c6"
+  },
+  "results/liquid/validation.json": {
+    "bytes": 227,
+    "sha256": "ba038d96c2d081d0ec1b277f11e71c028bd6d7164227bc19ab3fd2af7af258aa"
+  },
+  "results/liquid/contact_sheet.jpg": {
+    "bytes": 493134,
+    "sha256": "85b955aa54b13122c292633c1484a2996cac6664a66f967defb92e55bd64a127"
+  },
+  "results/liquid/caption.md": {
+    "bytes": 1856,
+    "sha256": "44b7dc655daf02ef565afd3ae426f745c4f3e64568098d73fd4133787ea1530c"
+  },
+  "results/liquid/comparison.mp4": {
+    "bytes": 967925,
+    "sha256": "cbd07d3d8c6e4f6c42ee1fdae36eaa480aad3311e906a1790f9eee00b1942aad"
+  },
+  "results/liquid/draft.mp4": {
+    "bytes": 565210,
+    "sha256": "97fb2aa4395de4fa129630c0efe187762a59d01ad5d4b7cb8a7c20f82d524140"
+  },
+  "results/liquid/final_seed0.mp4": {
+    "bytes": 257712,
+    "sha256": "ba707db9c0b5c80dd692ac72e48e454b14ace72050427d8c184581d148fd6843"
+  },
+  "results/sand/comparison.mp4": {
+    "bytes": 412978,
+    "sha256": "b45b8b54482c7b2ffc493b7aa733f835dd0cdb57224079e1e4b429f1aa5f4382"
+  },
+  "results/sand/comparison_sheet.jpg": {
+    "bytes": 109342,
+    "sha256": "10b08f038e416c06b8387298075789a9205cbcd690c5b7e33ca13ad9652a79b3"
+  },
+  "results/sand/draft.mp4": {
+    "bytes": 51083,
+    "sha256": "a2b87b27a1a47daa9b1d45a22a57d09ab9a1d0585b40beb183fae145ec5839c7"
+  },
+  "results/sand/final_seed0.mp4": {
+    "bytes": 211156,
+    "sha256": "1f8f95785a7c077f7fae493683cf4fedcd9b33a35074bf578d8cf67c727875f6"
+  },
+  "results/combined/h3/final_retry_seed0.mp4": {
+    "bytes": 183979,
+    "sha256": "f57ec57fdb0444a3072ef4d91380a4b34f5b770c3cfdbf02c7a503ea78657ae8"
+  },
+  "results/combined/h3/validation.json": {
+    "bytes": 239,
+    "sha256": "950650e36c03209461cea46d3ba605837c44f4856c4672381dfcda3491768790"
+  },
+  "results/combined/h3/caption.txt": {
+    "bytes": 2012,
+    "sha256": "fef632fe62560434293a64e5f977e82e0bdb1a2baa072dfec5b7a8032dc7025a"
+  },
+  "results/combined/h3/comparison.mp4": {
+    "bytes": 511465,
+    "sha256": "7e30eff09cf5b62e6a5ce2569e557af502d436f87654ff90ae8364f356720275"
+  },
+  "results/combined/h3/comparison_sheet.jpg": {
+    "bytes": 72535,
+    "sha256": "36a2c45fa78b158810a247fb17c7659dd3c09e288c376b1eff907086056b74ea"
+  }
+}

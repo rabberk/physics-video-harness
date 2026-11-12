@@ -1,0 +1,18 @@
+{
+  "final_retry_seed0.mp4": {
+    "frames": 124,
+    "size": [
+      1024,
+      576
+    ],
+    "timestamps_ok": true
+  },
+  "comparison.mp4": {
+    "frames": 124,
+    "size": [
+      2048,
+      576
+    ],
+    "timestamps_ok": true
+  }
+}
