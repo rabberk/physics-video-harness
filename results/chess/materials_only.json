@@ -1,0 +1,29 @@
+{
+  "draft": "draft.mp4",
+  "prompt": "No human hand or person is visible. Keep the moving pawn motion exactly as in the reference.",
+  "output": "materials_only.mp4",
+  "model": "MiniMax-H3",
+  "steps": 20,
+  "seed": 0,
+  "height": 512,
+  "width": 768,
+  "device": "cuda:0",
+  "min_free_gib": 24,
+  "allow_short_reference": false,
+  "appearance_edit": false,
+  "caption_file": "materials_only.txt",
+  "target_noise_reference_frames": null,
+  "workflow": "ref2va",
+  "reference_timing": {
+    "decoded_frames": 124,
+    "decoded_fps": 24.0,
+    "normalized_frames_at_24fps": 124,
+    "expected_vae_frames": 124,
+    "target_frames": 124,
+    "target_fps": 24,
+    "short_reference_allowed": false
+  },
+  "full_prompt": "subject_definitions: <Video 1> is the exact camera, composition, chessboard layout and piece motion reference.\nsummary: [video editing] Change surface materials and lighting while preserving the reference shot.\nretention_analysis: <Video 1>: fully_preserved - retain the entire chessboard boundary exactly where visible in the reference, identical camera viewpoint, perspective, framing, field of view and object scale. Preserve every stationary piece at its original screen position. Preserve the moving white pawn trajectory and the black pawn fall, including timing and final positions. Do not add, duplicate, remove or rearrange chess pieces. No zoom, camera movement, reframing or crop.\ndetailed_description: A fixed elevated view of the entire chessboard exactly as shown in the reference. Realistic walnut and maple board, satin ivory white pieces and ebony black pieces, soft natural illumination. Preserve the reference piece silhouettes and board geometry. The moving white pawn rises, advances, accidentally bumps the black pawn directly ahead, retreats and is placed down. The black pawn tips and falls as in the reference. One continuous shot. No human hand or person is visible. Keep the moving pawn motion exactly as in the reference.\noverall_soundscape: Quiet room ambience.\nnon_diegetic_music: None.",
+  "elapsed_seconds": 854.760669708252,
+  "trained_model": false
+}

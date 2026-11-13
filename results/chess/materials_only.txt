@@ -1,0 +1,6 @@
+subject_definitions: <Video 1> is the exact camera, composition, chessboard layout and piece motion reference.
+summary: [video editing] Change surface materials and lighting while preserving the reference shot.
+retention_analysis: <Video 1>: fully_preserved - retain the entire chessboard boundary exactly where visible in the reference, identical camera viewpoint, perspective, framing, field of view and object scale. Preserve every stationary piece at its original screen position. Preserve the moving white pawn trajectory and the black pawn fall, including timing and final positions. Do not add, duplicate, remove or rearrange chess pieces. No zoom, camera movement, reframing or crop.
+detailed_description: A fixed elevated view of the entire chessboard exactly as shown in the reference. Realistic walnut and maple board, satin ivory white pieces and ebony black pieces, soft natural illumination. Preserve the reference piece silhouettes and board geometry. The moving white pawn rises, advances, accidentally bumps the black pawn directly ahead, retreats and is placed down. The black pawn tips and falls as in the reference. One continuous shot. No human hand or person is visible. Keep the moving pawn motion exactly as in the reference.
+overall_soundscape: Quiet room ambience.
+non_diegetic_music: None.

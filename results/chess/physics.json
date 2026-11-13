@@ -1,0 +1,10 @@
+{
+  "solver": "MuJoCo",
+  "white_motion": "dynamic pawn held by finite-compliance weld to external target, released at 3.6s; hand omitted",
+  "black_motion": "free rigid body, contact-driven",
+  "frames": 124,
+  "fps": 24,
+  "first_white_black_contact_s": 2.02,
+  "black_max_tilt_deg": 99.69579788628403,
+  "black_final_tilt_deg": 97.39530845708919
+}

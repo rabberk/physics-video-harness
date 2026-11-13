@@ -1,6 +1,6 @@
 # Physics Video Harness
 
-模拟器生成物理草稿，再以冻结 MiniMax H3 Ref2VA 生成写实视频。实验快照：2026-11-11；整理：2026-11-12。这里归档选型、实际运行代码和最终结果，不包含模型权重或失败调参视频。
+模拟器生成物理草稿，再以冻结 MiniMax H3 Ref2VA 生成写实视频。组合实验快照：2026-11-11；棋盘实验更新：2026-11-14。这里归档选型、实际运行代码和最终结果，不包含模型权重或失败调参视频。
 
 ## 最终结果
 
@@ -12,6 +12,40 @@
 | 小球滚向沙堆 | [视频](results/sand/draft.mp4) | [视频](results/sand/final_seed0.mp4) | [对照](results/sand/comparison.mp4) |
 
 [![完整组合](results/combined/h3/comparison_sheet.jpg)](results/combined/h3/comparison.mp4)
+
+## 棋盘碰撞与 H3 补手实验（2026-11-14）
+
+白兵抬起、前进并意外碰倒前方黑兵，随后退回放下。MuJoCo 计算棋子运动，Blender 渲染无手参考视频，冻结 H3 Ref2VA 根据文字补手并转换材质。没有训练新模型。
+
+| 版本 | 视频 | 观察与限制 |
+|---|---|---|
+| 物理参考，无手 | [白模](results/chess/draft.mp4) | 白兵由有限柔顺 weld 跟随外部目标，3.6 秒释放；黑兵为接触驱动自由刚体，无倒下关键帧 |
+| 仅改材质 | [成片](results/chess/materials_only.mp4) | 保留整体棋盘构图，但局部棋子混淆；黑兵中间倒下、末尾出现重新立起错误 |
+| 改材质并补手 | [成片](results/chess/with_hand.mp4) | 手出现晚于白兵起始运动，抓握处存在棋子身份混淆 |
+| 最新：首帧补手指令 | [成片](results/chess/with_hand_early.mp4) | 首帧已有手，但尚未明确抓牢目标白兵；仍有接近抓取过程，手臂方向也未可靠遵守白方侧要求 |
+
+[三列同步对照：左白模／中仅改材质／右补手](results/chess/comparison.mp4)。三列按相同帧号并排，不插帧、不做时间拉伸，也不对棋盘额外配准。最新首帧补手版单独列出，不在三列视频中。
+
+[![三列对照关键帧](results/chess/comparison.jpg)](results/chess/comparison.mp4)
+
+[![最新首帧补手版关键帧](results/chess/with_hand_early_preview.jpg)](results/chess/with_hand_early.mp4)
+
+各版均为 768×512、124 帧、24 fps、seed 0、20 调度点（19 次显示去噪迭代）。两版对照使用相同白模与种子；最新补手版仅修改抓握时序指令。各版精确结构化提示词和运行记录见 `results/chess/*.txt`、`*.json`。
+
+去除早期提示词中的 `close-up` 并加强构图保持要求后，整体构图较早期近景结果改善；两项同时修改，不能单独归因于某一句提示词。仅材质版仍出现状态错误，说明问题并不完全来自补手。所有结论来自少数案例和关键帧检查，不构成定量控制精度评测。
+
+实际求解与渲染代码在 [simulate.py](results/chess/simulate.py)、[render.py](results/chess/render.py)，附场景、状态和渲染数据。棋子为程序化旋转体与简化装饰，碰撞使用圆柱、胶囊和球代理，不是精细生成资产。白兵运动受外部目标驱动，不是完整手—棋子动力学。
+
+复现顺序（需要 MuJoCo、NumPy、Blender 与 H3 环境，修改模型路径）：
+
+```bash
+python results/chess/simulate.py
+blender -b --python results/chess/render.py
+ffmpeg -framerate 24 -i results/chess/frames/%04d.png -c:v libx264 -pix_fmt yuv420p results/chess/draft.mp4
+python physics_harness/infer_h3.py --model /path/to/MiniMax-H3 --draft results/chess/draft.mp4 --output /tmp/chess_hand.mp4 --caption-file results/chess/with_hand_early.txt --prompt "Hand already grasping white pawn before lift" --height 512 --width 768 --steps 20 --seed 0
+```
+
+Ref2VA 将参考视频经 VAE 编码、patchify 后与目标视频 tokens 沿序列拼接，通过联合 self-attention 读取参考；不是逐像素锁定。参考与目标使用同一空间 RoPE 规则，网格相同时 h/w 坐标对齐，但时间区间前后排列。空间 PE 对齐不保证棋子身份、轨迹和相机严格保持。当前脚本没有局部 mask 编辑或额外结构控制分支。
 
 ## 模拟器选型与职责
 

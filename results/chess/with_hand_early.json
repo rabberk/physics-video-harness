@@ -1,0 +1,29 @@
+{
+  "draft": "draft.mp4",
+  "prompt": "Hand already grasping white pawn from first frame before lift; continuous grasp until placement.",
+  "output": "with_hand_early.mp4",
+  "model": "MiniMax-H3",
+  "steps": 20,
+  "seed": 0,
+  "height": 512,
+  "width": 768,
+  "device": "cuda:0",
+  "min_free_gib": 24,
+  "allow_short_reference": false,
+  "appearance_edit": false,
+  "caption_file": "with_hand_early.txt",
+  "target_noise_reference_frames": null,
+  "workflow": "ref2va",
+  "reference_timing": {
+    "decoded_frames": 124,
+    "decoded_fps": 24.0,
+    "normalized_frames_at_24fps": 124,
+    "expected_vae_frames": 124,
+    "target_frames": 124,
+    "target_fps": 24,
+    "short_reference_allowed": false
+  },
+  "full_prompt": "subject_definitions: <Video 1> is the exact camera, composition, chessboard layout and piece motion reference.\nsummary: [video editing] Change surface materials and lighting while preserving the reference shot.\nretention_analysis: <Video 1>: fully_preserved - retain the entire chessboard boundary exactly where visible in the reference, identical camera viewpoint, perspective, framing, field of view and object scale. Preserve every stationary piece at its original screen position. Preserve the moving white pawn trajectory and the black pawn fall, including timing and final positions. Do not add, duplicate, remove or rearrange chess pieces. No zoom, camera movement, reframing or crop.\ndetailed_description: A fixed elevated view of the entire chessboard exactly as shown in the reference. Realistic walnut and maple board, satin ivory white pieces and ebony black pieces, soft natural illumination. Preserve the reference piece silhouettes and board geometry. The moving white pawn rises, advances, accidentally bumps the black pawn directly ahead, retreats and is placed down. The black pawn tips and falls as in the reference. One continuous shot. From the VERY FIRST FRAME at time 0.00 seconds, one adult human right hand is ALREADY VISIBLE and its thumb and index finger are ALREADY pinching the head of the moving IVORY WHITE pawn at its initial reference position. The forearm extends toward the near white-player edge of the board. The shot begins with the grasp established, before any lift. Throughout the lift, forward travel, bump and retreat the fingers remain in continuous contact with this SAME WHITE pawn. There is no interval of unsupported floating and no delayed hand entrance. Follow the exact reference motion timing; do not delay the pawn motion. Only after lowering the pawn onto the board does the hand release and withdraw. The BLACK pawn is never grasped; it falls freely after being bumped. Only add the hand and its occlusion and contact shadows; keep all visible board squares and other pieces fixed. Do not move the camera to accommodate the hand.\noverall_soundscape: Quiet room ambience.\nnon_diegetic_music: None.",
+  "elapsed_seconds": 787.843683719635,
+  "trained_model": false
+}
